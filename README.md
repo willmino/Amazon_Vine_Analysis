@@ -16,6 +16,7 @@ Evidence for customer review bias would be supported by a higher five-star ratin
 ## Analysis
 I selected the musical instruments dataset from Amazon. 
 To begin, a Postgres driver was imported into Google Colab.
+
 `!wget https://jdbc.postgresql.org/download/postgresql-42.2.16.jar`
 
 A spark session was created and the Postgres driver was loaded into Spark.
@@ -36,7 +37,53 @@ The musical instruments dataset was then extracted from a proprietary AWS server
 
 `df.show()`
 
-I created four specific dataframes which matched the Postgres database schema to be created in pgAdmin.
+I created four new dataframes according to the Postgres database schema to be created in pgAdmin.
+Postgres database schema:
+![Postgres](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/schema.png)
+
+The customers_table dataframe was created with this code: 
+
+`from pyspark.sql.functions import sum,avg,max,count`
+
+`customers_df = df.groupby("customer_id").agg(count("customer_id")).withColumnRenamed("count(customer_id)", "customer_count")`
+
+The products_table dataframe was created with this code: 
+
+`products_df = df.select(["product_id","product_title"]).drop_duplicates()`
+
+The review_id dataframe was created with this code:
+
+`review_id_df = df.select(["review_id", "customer_id", "product_id", "product_parent", to_date("review_date", 'yyyy-MM-dd').alias("review_date")])`
+
+The vine_table dataframe was created with this code:
+
+`vine_df = df.select(["review_id", "star_rating", "helpful_votes", "total_votes", "vine", "verified_purchase"])`
+
+An AWS RDS instance was created to connect to the Postgres database:
+
+`mode = "append"`
+
+`jdbc_url="jdbc:postgresql://dataviz.cmuktimxt422.us-east-2.rds.amazonaws.com:5432/postgres"`
+
+`config = {"user":"postgres",`
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"password": "#Removed for security reasons",`
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"driver":"org.postgresql.Driver"}`
+
+The four dataframes were then written to the Postgres database through AWS.
+# Write review_id_df to table in RDS
+`review_id_df.write.jdbc(url=jdbc_url, table='review_id_table', mode=mode, properties=config)`
+
+# Write products_df to table in RDS
+`products_df.write.jdbc(url=jdbc_url, table='products_table', mode=mode, properties=config)`
+
+# Write customers_df to table in RDS
+`customers_df.write.jdbc(url=jdbc_url, table='customers_table', mode=mode, properties=config)`
+
+# Write vine_df to table in RDS
+`vine_df.write.jdbc(url=jdbc_url, table='vine_table', mode=mode, properties=config)`
+
 
 
 
