@@ -115,6 +115,7 @@ When selecting the table in SQL, `SELECT * FROM vine_table`, we see the followin
 
 ![sql_vine](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/sql_vine.png)
 
+### Pandas Analysis of the vine_table.csv file
 
 ## Results
 
@@ -122,6 +123,9 @@ From our analysis, it was determined that overall (paid and unapid) there was 14
 60 of these reviews were through the Amazon Vine program (paid reviews). 14477 of these reviews were unpaid.
 Out of all the Vine reviews, 34 of them had five star ratings. This meant that 57% of the paid reviews had five star ratings.
 Out of all the unpaid reviews, 8212 of them had five star ratings.
+Evidence for customer review bias would be supported by a higher five-star rating for paid customer reviews compared to unpaid customer reviews.
+However, the paid review five star percentage and the unpaid review five star percentage were both approximately 57%.
+Thus, there was no evidence that paid reviews for Musical Instruments on Amazon were not biased.
 
 
 ## Summary
