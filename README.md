@@ -82,28 +82,28 @@ An AWS RDS instance was created to connect to the Postgres database:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"driver":"org.postgresql.Driver"}`
 
 The four dataframes were then written to the Postgres database through AWS.
-# Write review_id_df to table in RDS
+**Write review_id_df to table in RDS**
 `review_id_df.write.jdbc(url=jdbc_url, table='review_id_table', mode=mode, properties=config)`
 
 When selecting the table in SQL, `SELECT * FROM review_id_table`, we see the following table.
 
 ![sql_review_id](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/sql_review_id.png)
 
-# Write products_df to table in RDS
+**Write products_df to table in RDS**
 `products_df.write.jdbc(url=jdbc_url, table='products_table', mode=mode, properties=config)`
 
 When selecting the table in SQL, `SELECT * FROM products_table`, we see the following table.
 
 ![sql_products](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/sql_products.png)
 
-# Write customers_df to table in RDS
+**Write customers_df to table in RDS**
 `customers_df.write.jdbc(url=jdbc_url, table='customers_table', mode=mode, properties=config)`
 
 When selecting the table in SQL, `SELECT * FROM customers_table`, we see the following table.
 
 ![sql_customers](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/sql_customers.png)
 
-# Write vine_df to table in RDS
+**Write vine_df to table in RDS**
 `vine_df.write.jdbc(url=jdbc_url, table='vine_table', mode=mode, properties=config)`
 
 When selecting the table in SQL, `SELECT * FROM vine_table`, we see the following table.
