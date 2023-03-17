@@ -82,6 +82,7 @@ An AWS RDS instance was created to connect to the Postgres database:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`"driver":"org.postgresql.Driver"}`
 
 The four dataframes were then written to the Postgres database through AWS.
+
 **Write review_id_df to table in RDS**
 
 `review_id_df.write.jdbc(url=jdbc_url, table='review_id_table', mode=mode, properties=config)`
