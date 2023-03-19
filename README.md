@@ -15,7 +15,11 @@ Evidence for customer review bias would be supported by a higher five-star ratin
 
 ## Analysis
 I selected the musical instruments dataset from Amazon. 
+The following analysis was carried out in the `Amazon_Reviews_ETL.ipynb` file.
+
 To begin, a Postgres driver was imported into Google Colab.
+
+
 
 `!wget https://jdbc.postgresql.org/download/postgresql-42.2.16.jar`
 
@@ -115,17 +119,97 @@ When selecting the table in SQL, `SELECT * FROM vine_table`, we see the followin
 
 ![sql_vine](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/sql_vine.png)
 
+From pgAdmin Postgres, the vine-table was exported as the csv file `vine_table.csv`.
+The file was then loaded into a new file called `Vine_Review_Analysis.ipynb` for Python Pandas data calculations.
+
 ### Pandas Analysis of the vine_table.csv file
 
-## Results
+Some critical key performance indicators were required for our client's Amazon reviews, such as total number of reviews, total number of paid reviews,
+total number of unpaid reviews, percentage of paid reviews that had a five star rating, and the percentage of unpaid reviews that had a five star rating.
+
+First the data was standardized for only Amazon products which had greater than 20 comments and at least a 50% helpful votes ratio (compared to all rating votes).
+These parameters were calculated with the following code:
+
+`reviews_df = df.loc[df["total_votes"]>=20]`
+
+`reviews_df.head()`
+
+`helpful_reviews_df = reviews_df.loc[(reviews_df["helpful_votes"]/reviews_df["total_votes"])>=0.5]`
+
+`helpful_reviews_df.head()`
+
+A variable was created to represent only reviews that were paid for through the Amazon Vine review service:
+
+`vine_reviews_df = helpful_reviews_df.loc[helpful_reviews_df["vine"] == "Y"]`
+
+`vine_reviews_df.head()`
+
+A variable for only unpaid reviews was created with this code:
+
+`non_vine_reviews_df = helpful_reviews_df.loc[helpful_reviews_df["vine"] == "N"]`
+
+`non_vine_reviews_df.head()`
+
+A count for the total number of all reviews (paid and unpaid) was performed with this code:
+
+`all_reviews = helpful_reviews_df["review_id"].nunique()`
+
+Finally, the code to get total number of paid reviews, number of paid five star reviews, and the percentage of paid reviews with five stars was calculated with the below code: 
+
+`# Total number of paid reviews`
+
+`total_paid_reviews = vine_reviews_df["review_id"].nunique()`
+
+`# Number of paid 5-star reviews`
+
+`paid_five_star_reviews = vine_reviews_df.loc[vine_reviews_df["star_rating"]==5.0]["star_rating"].count()`
+
+`# The percentage of paid reviews that are five stars`
+
+`percentage_paid_five_star_reviews = round(100*paid_five_star_reviews/total_paid_reviews)`
+
+Finally, the code to get total number of unpaid reviews, number of unpaid five star reviews, and the percentage of unpaid reviews with five stars was calculated with the below code: 
+
+`# Total number of unpaid reviews`
+
+`total_unpaid_reviews = non_vine_reviews_df["review_id"].nunique()`
+
+`# Number of unpaid 5-star reviews`
+
+`unpaid_five_star_reviews = non_vine_reviews_df.loc[non_vine_reviews_df["star_rating"]==5.0]["star_rating"].count()`
+
+`# The percentage of unpaid reviews that are five stars`
+
+`percentage_unpaid_five_star_reviews = round(100*unpaid_five_star_reviews/total_unpaid_reviews)`
+
+## Results for Musical Instruments Dataset
 
 From our analysis, it was determined that overall (paid and unapid) there was 14537 total reviews.
-60 of these reviews were through the Amazon Vine program (paid reviews). 14477 of these reviews were unpaid.
-Out of all the Vine reviews, 34 of them had five star ratings. This meant that 57% of the paid reviews had five star ratings.
-Out of all the unpaid reviews, 8212 of them had five star ratings. This also equated to a 57% five star rating percentage out of all unpaid reviews.
-Evidence for customer review bias would be supported by a higher five-star rating for paid customer reviews compared to unpaid customer reviews.
-However, the paid review five star percentage and the unpaid review five star percentage were both approximately 57%.
-Thus, there was no bias towards paid customer reviews for Amazon products.
 
+### Three questions answered by the Results
 
+- There were 60 Vine reviews for musical instruments.
+  There were 14477 non-Vine reviews (unpaid reviews). 
+
+- 34 Vine reviews had five star ratings.
+  8212 non-Vine reviews had five star ratings.
+
+- This meant that 57% of the paid reviews had five star ratings.
+  This also equated to a 57% five star rating percentage out of all unpaid reviews.
 ## Summary
+
+A large dataset of Amazon customer reviews was extracted from an AWS hosting server. The data was pulled into the cloud-based Google Colab software.
+Using PySpark, a software similar to Pandas, the data was appropriately manipulated to match the schema of our Postgres database in pgAdmin.
+We used PySpark to successfully transfer the data from Google Colab to pgAdmin. The data on the Postgres server in pgAdmin was hosted by my own AWS database.
+We finished off the analysis by performing some calculations on the dataset in Python Pandas.
+
+We determined that the paid reviews five star percentage and the unpaid review five star rating percentage were both approximately 57%.
+Evidence for customer review bias would be supported by a higher five-star rating for paid customer reviews compared to unpaid customer reviews.
+However, we did not see a discrepancy in the five star rating review frequency between paid and unpaid reviews.
+Thus, there was no bias towards paid customer reviews for Amazon products through the Vine service.
+
+### Suggested Additional Analysis
+
+I would perform additional analysis on more Amazon customer review datasets with different product types. If it was determined that specific products with paid customer reviews had a higher five-star rating frequency than the unpaid customer review five-star rating frequency, then we would have evidence for bias toward paid customer positive reviews.
+
+For musical instruments specifically, most people giving the reviews, especially customers paid through the Vine service, are likely to have a minimum competency in the playing of a musical instrument. Since we filtered for "useful" customer reviews with greater than a 50% useful rating out of total product ratings, these comments are likely to be genuine and less biased. This is likely the case for specific product types like musical instruments. For other product types, which don't require a high customer skill cap, such as school supplies, its possible that this dataset of reviews will have more unskilled people using them that are likely to have a less critically informed opinions. This could have a greater chance in leading to more unnecessary negative or positive reviews. Its important to test a variety of different types of products to highlight different factors which could apply to certain product types but not all product types. In doing so, we will tend to approach a stronger evidence based prediction as to whether or not paid customer reviews (for all product types) exhibit some kind of positivity bias relative to unpaid reviews.
