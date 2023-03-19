@@ -2,7 +2,7 @@
 Amazon Web Services and Cloud Based Data Extraction and Analysis of Amazon Product Customer Reviews
 
 ## Overview
-Big Data was extracted from an Amazon Web Services (AWS) server and processed with PySpark (Spark in Python) in a Google Colab .ipynb file.
+I needed to analyze Amazon product customer reviews for a client. They wanted to know if paid customer reviews were biased compared to unpaid customer reviews. Big Data was extracted from an Amazon Web Services (AWS) server and processed with PySpark (Spark in Python) in a Google Colab .ipynb file.
 The data was then transferred to a postgres SQL server in pgAdmin. This SQL server was hosted by AWS.
 
 ### Purpose
