@@ -190,10 +190,20 @@ Here is the resulting dataframe in Pandas that served as the parental dataframe 
 
 From our analysis, it was determined that overall (paid and unapid) there was 14537 total reviews.
 
+The following dataframe represents only the paid vine reviews used to answer some of the questions below:
+
+![vine_reviews_df](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/vine_reviews_df.png)
+
+The following dataframe represents only the unpaid vine reviews used to answer some of the questions below:
+
+![non_vine_reviews_df](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/non_vine_reviews.png)
+
+
 ### Three questions answered by the Results
 
 - There were 60 Vine reviews for musical instruments.
   There were 14477 non-Vine reviews (unpaid reviews). 
+
 
 - 34 Vine reviews had five star ratings.
   8212 non-Vine reviews had five star ratings.
