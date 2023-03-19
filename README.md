@@ -184,6 +184,10 @@ Finally, the code to get total number of unpaid reviews, number of unpaid five s
 
 ## Results for Musical Instruments Dataset
 
+Here is the resulting dataframe in Pandas that served as the parental dataframe for all calculations.
+
+![credible_reviews_df](https://github.com/willmino/Amazon_Vine_Analysis/blob/main/images/credible_reviews_df.png)
+
 From our analysis, it was determined that overall (paid and unapid) there was 14537 total reviews.
 
 ### Three questions answered by the Results
