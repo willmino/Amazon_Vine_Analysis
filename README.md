@@ -220,7 +220,7 @@ We finished off the analysis by performing some calculations on the dataset in P
 We determined that the paid reviews five star percentage and the unpaid review five star rating percentage were both approximately 57%.
 Evidence for customer review bias would be supported by a higher five-star rating for paid customer reviews compared to unpaid customer reviews.
 However, we did not see a discrepancy in the five star rating review frequency between paid and unpaid reviews.
-Thus, there was no bias towards paid customer reviews for Amazon products through the Vine service.
+Thus, there was no bias towards paid customer reviews for Musical Instrument Amazon products through the Vine service.
 
 ### Suggested Additional Analysis
 
