@@ -182,7 +182,7 @@ Finally, the code to get total number of unpaid reviews, number of unpaid five s
 
 `percentage_unpaid_five_star_reviews = round(100*unpaid_five_star_reviews/total_unpaid_reviews)`
 
-## Results for Musical Instruments Dataset
+## Results
 
 Here is the resulting dataframe in Pandas that served as the parental dataframe for all calculations.
 
